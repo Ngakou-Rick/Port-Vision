@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Eye, EyeOff, Ship, AlertCircle } from "lucide-react";
+import { Eye, EyeOff, AlertCircle, ArrowRight } from "lucide-react";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -73,19 +73,8 @@ export default function LoginForm() {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto">
-      <CardHeader className="text-center">
-        <div className="flex justify-center mb-4">
-          <div className="p-3 bg-primary/10 rounded-full">
-            <Ship className="h-8 w-8 text-primary" />
-          </div>
-        </div>
-        <CardTitle className="text-2xl font-bold">Connexion</CardTitle>
-        <CardDescription>
-          Accédez à votre tableau de bord de reconnaissance d'images
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
+    <Card className="w-full bg-transparent border-none shadow-none">
+      <CardContent className="p-0">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
@@ -145,9 +134,9 @@ export default function LoginForm() {
               <input
                 id="remember"
                 type="checkbox"
-                className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                className="h-4 w-4 text-primary focus:ring-primary border-muted-foreground rounded"
               />
-              <Label htmlFor="remember" className="text-sm">
+              <Label htmlFor="remember" className="text-sm font-normal">
                 Se souvenir de moi
               </Label>
             </div>
@@ -162,6 +151,7 @@ export default function LoginForm() {
             disabled={isLoading}
           >
             {isLoading ? "Connexion..." : "Se connecter"}
+            {!isLoading && <ArrowRight className="ml-2 h-4 w-4" />}
           </Button>
         </form>
 

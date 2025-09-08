@@ -104,23 +104,14 @@ export default function ImageUpload({ onImageUpload, onAnalysisComplete }: Image
   };
 
   return (
-    <div className="space-y-6">
-      {/* Upload Area */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Camera className="h-5 w-5" />
-            Upload d'Image
-          </CardTitle>
-          <CardDescription>
-            Glissez-déposez une image ou cliquez pour la sélectionner
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+    <Card>
+      <CardContent className="p-6 grid gap-6 lg:grid-cols-2">
+        {/* Upload Area */}
+        <div className="space-y-6">
           <div
             {...getRootProps()}
             className={`
-              border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors
+              border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors h-full flex flex-col justify-center
               ${isDragActive 
                 ? 'border-primary bg-primary/5' 
                 : 'border-muted-foreground/25 hover:border-primary/50 hover:bg-primary/5'
@@ -131,46 +122,27 @@ export default function ImageUpload({ onImageUpload, onAnalysisComplete }: Image
             <input {...getInputProps()} />
             <div className="flex flex-col items-center gap-4">
               <div className="p-4 bg-primary/10 rounded-full">
-                {isDragActive ? (
-                  <Upload className="h-8 w-8 text-primary" />
-                ) : (
-                  <ImageIcon className="h-8 w-8 text-primary" />
-                )}
+                <Upload className="h-8 w-8 text-primary" />
               </div>
               <div>
                 <p className="text-lg font-medium">
                   {isDragActive 
                     ? "Déposez l'image ici" 
-                    : "Glissez-déposez une image ou cliquez pour sélectionner"
+                    : "Glissez-déposez ou cliquez pour sélectionner"
                   }
                 </p>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Formats supportés: JPG, PNG, GIF, BMP, WebP (max 10MB)
+                  Formats supportés: JPG, PNG, etc. (max 10MB)
                 </p>
               </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
 
-      {/* Uploaded Files */}
-      {uploadedFiles.length > 0 && (
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle className="flex items-center gap-2">
-                <FileImage className="h-5 w-5" />
-                Images Uploadées
-              </CardTitle>
-              <Button variant="outline" size="sm" onClick={clearAll}>
-                Tout effacer
-              </Button>
-            </div>
-          </CardHeader>
-          <CardContent>
+          {/* Uploaded Files */}
+          {uploadedFiles.length > 0 && (
             <div className="space-y-4">
               {uploadedFiles.map((file, index) => (
-                <div key={index} className="flex items-center gap-4 p-4 border rounded-lg">
+                <div key={index} className="flex items-center gap-4 p-3 border rounded-lg bg-secondary/30">
                   <div className="flex-shrink-0">
                     <img
                       src={URL.createObjectURL(file)}
@@ -188,9 +160,6 @@ export default function ImageUpload({ onImageUpload, onAnalysisComplete }: Image
                     {isAnalyzing && index === 0 && (
                       <div className="flex items-center gap-2">
                         <Progress value={analysisProgress} className="w-20" />
-                        <span className="text-sm text-muted-foreground">
-                          {Math.round(analysisProgress)}%
-                        </span>
                       </div>
                     )}
                     <Button
@@ -205,66 +174,52 @@ export default function ImageUpload({ onImageUpload, onAnalysisComplete }: Image
                 </div>
               ))}
             </div>
-          </CardContent>
-        </Card>
-      )}
+          )}
+        </div>
 
-      {/* Analysis Results */}
-      {analysisResults && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <CheckCircle className="h-5 w-5 text-green-500" />
-              Résultats d'Analyse
-            </CardTitle>
-            <CardDescription>
-              Objets détectés dans l'image
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+        {/* Analysis Results */}
+        <div className="space-y-6">
+          {analysisResults ? (
             <div className="space-y-4">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <img
-                    src={analysisResults.imageUrl}
-                    alt="Analyzed"
-                    className="w-full h-64 object-cover rounded-lg"
-                  />
-                </div>
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="font-semibold mb-2">Numéro de conteneur détecté:</h4>
-                    <p className="text-lg font-mono bg-muted p-2 rounded">
-                      {analysisResults.containerNumber}
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-2">Objets identifiés:</h4>
-                    <div className="space-y-2">
-                      {analysisResults.objects.map((obj: any, index: number) => (
-                        <div key={index} className="flex items-center justify-between p-2 bg-muted rounded">
-                          <span className="font-medium">{obj.name}</span>
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm text-muted-foreground">
-                              {Math.round(obj.confidence * 100)}%
-                            </span>
-                            <div className="w-16 bg-secondary rounded-full h-2">
-                              <div 
-                                className="bg-primary h-2 rounded-full transition-all duration-300"
-                                style={{ width: `${obj.confidence * 100}%` }}
-                              />
-                            </div>
-                          </div>
+              <div className="p-4 border rounded-lg">
+                <h4 className="font-semibold mb-2">Numéro de conteneur détecté:</h4>
+                <p className="text-lg font-mono bg-muted p-2 rounded">
+                  {analysisResults.containerNumber}
+                </p>
+              </div>
+              <div className="p-4 border rounded-lg">
+                <h4 className="font-semibold mb-2">Objets identifiés:</h4>
+                <div className="space-y-2">
+                  {analysisResults.objects.map((obj: any, index: number) => (
+                    <div key={index} className="flex items-center justify-between p-2 bg-muted rounded">
+                      <span className="font-medium">{obj.name}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-muted-foreground">
+                          {Math.round(obj.confidence * 100)}%
+                        </span>
+                        <div className="w-16 bg-secondary rounded-full h-2">
+                          <div
+                            className="bg-primary h-2 rounded-full"
+                            style={{ width: `${obj.confidence * 100}%` }}
+                          />
                         </div>
-                      ))}
+                      </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
-          </CardContent>
-        </Card>
-      )}
-    </div>
+          ) : (
+            <div className="h-full flex flex-col items-center justify-center text-center border-2 border-dashed rounded-lg p-8">
+              <CheckCircle className="h-12 w-12 text-muted-foreground/50 mb-4" />
+              <h3 className="text-lg font-medium text-muted-foreground">Les résultats s'afficheront ici</h3>
+              <p className="text-sm text-muted-foreground">
+                Uploadez une image pour démarrer l'analyse.
+              </p>
+            </div>
+          )}
+        </div>
+      </CardContent>
+    </Card>
   );
 }

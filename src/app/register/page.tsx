@@ -1,105 +1,41 @@
 import RegisterForm from "@/components/auth/register-form";
-import { Ship, Waves, Shield, Users } from "lucide-react";
+import { Ship } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function RegisterPage() {
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: "url('/Une-vue-panoramiqu.jpg')"
-        }}
-      />
-      
-      {/* Dark Overlay for better readability */}
-      <div className="absolute inset-0 bg-black/40" />
-      
-      {/* Additional gradient overlay for better contrast */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-slate-900/50" />
-      
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-10 left-10">
-          <Ship className="h-32 w-32 text-white/30" />
-        </div>
-        <div className="absolute top-32 right-20">
-          <Waves className="h-24 w-24 text-white/30" />
-        </div>
-        <div className="absolute bottom-20 left-1/4">
-          <Shield className="h-20 w-20 text-white/30" />
-        </div>
-        <div className="absolute bottom-32 right-1/3">
-          <Users className="h-16 w-16 text-white/30" />
-        </div>
-        <div className="absolute top-1/2 left-10">
-          <Ship className="h-16 w-16 text-white/30" />
-        </div>
-        <div className="absolute top-1/3 right-10">
-          <Waves className="h-12 w-12 text-white/30" />
+    <div className="min-h-screen w-full grid grid-cols-1 lg:grid-cols-2">
+      <div className="h-full flex flex-col items-center justify-center p-8">
+        <div className="w-full max-w-2xl">
+          <div className="mb-8 text-center lg:text-left">
+            <Link href="/" className="inline-flex items-center gap-2 mb-8">
+              <Ship className="h-8 w-8 text-primary" />
+              <span className="text-2xl font-bold">PortScan</span>
+            </Link>
+            <h1 className="text-3xl font-bold text-foreground">
+              Créez votre compte
+            </h1>
+            <p className="text-muted-foreground">
+              Rejoignez la plateforme leader pour l'analyse d'images portuaires.
+            </p>
+          </div>
+          <RegisterForm />
         </div>
       </div>
-
-      {/* Main Content */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center p-4 py-8">
-        <div className="w-full max-w-4xl">
-          {/* Logo and Title */}
-          <div className="text-center mb-8">
-            <div className="flex justify-center mb-4">
-              <div className="p-4 bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl">
-                <Ship className="h-12 w-12 text-primary" />
-              </div>
-            </div>
-            <h1 className="text-3xl font-bold text-white mb-2 drop-shadow-lg">
-              Port Scan Dashboard
-            </h1>
-            <p className="text-white/90 drop-shadow-md">
-              Rejoignez notre communauté d'experts portuaires
-            </p>
-          </div>
-
-          {/* Registration Form */}
-          <RegisterForm />
-
-          {/* Benefits Section */}
-          <div className="mt-12 grid md:grid-cols-3 gap-6">
-            <div className="text-center p-6 bg-white/80 backdrop-blur-sm rounded-lg shadow-lg">
-              <div className="p-3 bg-primary/10 rounded-full w-fit mx-auto mb-4">
-                <Shield className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="font-semibold text-foreground mb-2">Sécurité garantie</h3>
-              <p className="text-sm text-muted-foreground">
-                Vos données sont protégées par des standards de sécurité de niveau bancaire
-              </p>
-            </div>
-
-            <div className="text-center p-6 bg-white/80 backdrop-blur-sm rounded-lg shadow-lg">
-              <div className="p-3 bg-primary/10 rounded-full w-fit mx-auto mb-4">
-                <Users className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="font-semibold text-foreground mb-2">Support expert</h3>
-              <p className="text-sm text-muted-foreground">
-                Équipe dédiée pour vous accompagner dans l'utilisation de la plateforme
-              </p>
-            </div>
-
-            <div className="text-center p-6 bg-white/80 backdrop-blur-sm rounded-lg shadow-lg">
-              <div className="p-3 bg-primary/10 rounded-full w-fit mx-auto mb-4">
-                <Ship className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="font-semibold text-foreground mb-2">Spécialisé portuaire</h3>
-              <p className="text-sm text-muted-foreground">
-                Solution conçue spécifiquement pour les défis de l'industrie portuaire
-              </p>
-            </div>
-          </div>
-
-          {/* Footer */}
-          <div className="mt-8 text-center">
-            <p className="text-xs text-white/70 drop-shadow-sm">
-              © 2024 Port Scan Dashboard. Tous droits réservés.
-            </p>
-          </div>
+      <div className="hidden lg:block relative">
+        <Image
+          src="/Une-vue-panoramiqu.jpg"
+          alt="Vue panoramique d'un port"
+          layout="fill"
+          objectFit="cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+        <div className="absolute bottom-8 left-8 right-8 text-white">
+          <h2 className="text-3xl font-semibold">
+            "Une efficacité accrue de 20% sur la gestion des conteneurs."
+          </h2>
+          <p className="mt-2 text-slate-300">- Directeur des Opérations, Port d'Anvers</p>
         </div>
       </div>
     </div>

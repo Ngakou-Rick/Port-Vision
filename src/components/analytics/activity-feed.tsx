@@ -99,10 +99,10 @@ const activityTypes = [
 ];
 
 const statusColors = {
-  success: "text-green-600 bg-green-100",
-  error: "text-red-600 bg-red-100",
-  warning: "text-yellow-600 bg-yellow-100",
-  info: "text-blue-600 bg-blue-100"
+  success: "text-green-600 bg-green-500/10",
+  error: "text-destructive bg-destructive/10",
+  warning: "text-yellow-600 bg-yellow-500/10",
+  info: "text-blue-600 bg-blue-500/10"
 };
 
 export default function ActivityFeed() {
@@ -143,29 +143,11 @@ export default function ActivityFeed() {
   };
 
   const getActivityIcon = (type: string, status: string) => {
+    const iconColor = status === "success" ? "text-green-500" : "text-destructive";
     if (type === "image_analysis") {
-      return status === "success" ? (
-        <Camera className="h-4 w-4 text-green-600" />
-      ) : (
-        <Camera className="h-4 w-4 text-red-600" />
-      );
+      return <Camera className={`h-5 w-5 ${iconColor}`} />;
     } else {
-      return status === "success" ? (
-        <Container className="h-4 w-4 text-green-600" />
-      ) : (
-        <Container className="h-4 w-4 text-red-600" />
-      );
-    }
-  };
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "success":
-        return <CheckCircle className="h-4 w-4 text-green-600" />;
-      case "error":
-        return <AlertCircle className="h-4 w-4 text-red-600" />;
-      default:
-        return <Clock className="h-4 w-4 text-blue-600" />;
+      return <Container className={`h-5 w-5 ${iconColor}`} />;
     }
   };
 

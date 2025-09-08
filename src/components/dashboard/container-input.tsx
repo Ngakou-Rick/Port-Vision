@@ -84,173 +84,143 @@ export default function ContainerInput({ onContainerSearch, onAnalysisComplete }
   };
 
   return (
-    <div className="space-y-6">
-      {/* Search Input */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Container className="h-5 w-5" />
-            Recherche par Numéro de Conteneur
-          </CardTitle>
-          <CardDescription>
-            Saisissez le numéro de conteneur pour obtenir des informations détaillées
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="containerNumber">Numéro de conteneur</Label>
-              <div className="flex gap-2">
-                <Input
-                  id="containerNumber"
-                  placeholder="Ex: ABCD1234567"
-                  value={containerNumber}
-                  onChange={(e) => {
-                    setContainerNumber(e.target.value.toUpperCase());
-                    setError("");
-                  }}
-                  onKeyPress={handleKeyPress}
-                  className={error ? "border-destructive" : ""}
-                  disabled={isSearching}
-                />
-                <Button 
-                  onClick={handleSearch} 
-                  disabled={isSearching || !containerNumber.trim()}
-                  className="px-6"
-                >
-                  {isSearching ? (
-                    <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      Recherche...
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-2">
-                      <Search className="h-4 w-4" />
-                      Rechercher
-                    </div>
-                  )}
-                </Button>
+    <Card>
+      <CardContent className="p-6">
+        <div className="max-w-2xl mx-auto">
+          <div className="space-y-2">
+            <Label htmlFor="containerNumber" className="text-base">Numéro de conteneur</Label>
+            <div className="flex gap-2">
+              <Input
+                id="containerNumber"
+                placeholder="Ex: ABCD1234567"
+                value={containerNumber}
+                onChange={(e) => {
+                  setContainerNumber(e.target.value.toUpperCase());
+                  setError("");
+                }}
+                onKeyPress={handleKeyPress}
+                className={error ? "border-destructive" : ""}
+                disabled={isSearching}
+              />
+              <Button
+                onClick={handleSearch}
+                disabled={isSearching || !containerNumber.trim()}
+                className="px-6"
+              >
+                {isSearching ? (
+                  <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <Search className="h-4 w-4" />
+                )}
+              </Button>
+            </div>
+            {error && (
+              <div className="flex items-center gap-1 text-sm text-destructive">
+                <AlertCircle className="h-4 w-4" />
+                <span>{error}</span>
               </div>
-              {error && (
-                <div className="flex items-center gap-1 text-sm text-destructive">
-                  <AlertCircle className="h-4 w-4" />
-                  <span>{error}</span>
-                </div>
-              )}
-            </div>
-
-            <div className="text-sm text-muted-foreground">
-              <p>Format attendu: 4 lettres suivies de 7 chiffres (ex: ABCD1234567)</p>
-            </div>
+            )}
           </div>
-        </CardContent>
-      </Card>
+          <p className="text-sm text-muted-foreground mt-2">
+            Format attendu: 4 lettres suivies de 7 chiffres (ex: ABCD1234567)
+          </p>
+        </div>
 
-      {/* Search Results */}
-      {searchResults && (
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
+        {/* Search Results */}
+        {searchResults && (
+          <div className="mt-8 pt-8 border-t">
+            <div className="flex items-center justify-between mb-6">
               <CardTitle className="flex items-center gap-2">
                 <CheckCircle className="h-5 w-5 text-green-500" />
-                Informations du Conteneur
+                Résultats pour {searchResults.containerNumber}
               </CardTitle>
               <Button variant="outline" size="sm" onClick={clearSearch}>
                 Nouvelle recherche
               </Button>
             </div>
-            <CardDescription>
-              Détails du conteneur {searchResults.containerNumber}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-x-8 gap-y-6">
               {/* Basic Information */}
-              <div className="space-y-4">
+              <div className="space-y-4 p-4 border rounded-lg">
                 <h4 className="font-semibold text-lg">Informations générales</h4>
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Numéro:</span>
-                    <span className="font-mono font-semibold">{searchResults.containerNumber}</span>
-                  </div>
+                <div className="space-y-3 text-sm">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Statut:</span>
-                    <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                    <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full font-medium">
                       {searchResults.status}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Localisation:</span>
-                    <span className="text-right">{searchResults.location}</span>
+                    <span className="text-right font-medium">{searchResults.location}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Dimensions:</span>
-                    <span>{searchResults.dimensions}</span>
+                    <span className="font-medium">{searchResults.dimensions}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Poids:</span>
-                    <span>{searchResults.weight}</span>
+                    <span className="font-medium">{searchResults.weight}</span>
                   </div>
                 </div>
               </div>
 
               {/* Security & Customs */}
-              <div className="space-y-4">
+              <div className="space-y-4 p-4 border rounded-lg">
                 <h4 className="font-semibold text-lg">Sécurité & Douanes</h4>
-                <div className="space-y-3">
+                <div className="space-y-3 text-sm">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Statut sécurité:</span>
-                    <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-sm">
+                    <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full font-medium">
                       {searchResults.securityStatus}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Statut douanes:</span>
-                    <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                    <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full font-medium">
                       {searchResults.customsStatus}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Arrivée estimée:</span>
-                    <span className="text-right">
+                    <span className="text-right font-medium">
                       {new Date(searchResults.estimatedArrival).toLocaleString('fr-FR')}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Dernière mise à jour:</span>
-                    <span className="text-right">
+                    <span className="text-muted-foreground">Dernière màj:</span>
+                    <span className="text-right font-medium">
                       {new Date(searchResults.lastUpdate).toLocaleString('fr-FR')}
                     </span>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Contents Analysis */}
-            <div className="mt-6">
-              <h4 className="font-semibold text-lg mb-4">Contenu détecté</h4>
-              <div className="space-y-2">
-                {searchResults.contents.map((item: any, index: number) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-muted rounded-lg">
-                    <span className="font-medium">{item.type}</span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-muted-foreground">
-                        {Math.round(item.confidence * 100)}%
-                      </span>
-                      <div className="w-20 bg-secondary rounded-full h-2">
-                        <div 
-                          className="bg-primary h-2 rounded-full transition-all duration-300"
-                          style={{ width: `${item.confidence * 100}%` }}
-                        />
+              {/* Contents Analysis */}
+              <div className="md:col-span-2 mt-4 p-4 border rounded-lg">
+                <h4 className="font-semibold text-lg mb-4">Contenu détecté</h4>
+                <div className="space-y-2">
+                  {searchResults.contents.map((item: any, index: number) => (
+                    <div key={index} className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                      <span className="font-medium">{item.type}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-muted-foreground">
+                          {Math.round(item.confidence * 100)}%
+                        </span>
+                        <div className="w-20 bg-secondary rounded-full h-2">
+                          <div
+                            className="bg-primary h-2 rounded-full"
+                            style={{ width: `${item.confidence * 100}%` }}
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
-          </CardContent>
-        </Card>
-      )}
-    </div>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }

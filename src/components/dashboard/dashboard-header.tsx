@@ -1,7 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Ship, Bell, User, LogOut, Settings } from "lucide-react";
+import { Ship, Bell, User, LogOut, Settings, BarChart3, LayoutDashboard } from "lucide-react";
+import Link from "next/link";
 
 interface DashboardHeaderProps {
   userName?: string;
@@ -10,44 +11,45 @@ interface DashboardHeaderProps {
 
 export default function DashboardHeader({ userName = "Utilisateur", onLogout }: DashboardHeaderProps) {
   return (
-    <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4">
+    <header className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50">
+      <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Logo and Title */}
-          <div className="flex items-center space-x-3">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Ship className="h-8 w-8 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-foreground">Port Scan Dashboard</h1>
-              <p className="text-sm text-muted-foreground">Reconnaissance d'images portuaire</p>
-            </div>
+          <div className="flex items-center space-x-4">
+            <Link href="/" className="flex items-center space-x-2">
+              <Ship className="h-7 w-7 text-primary" />
+              <span className="text-xl font-bold text-foreground">PortScan</span>
+            </Link>
+            <nav className="hidden md:flex items-center space-x-2">
+              <Button variant="secondary" size="sm" asChild>
+                <Link href="/dashboard" className="flex items-center gap-2">
+                  <LayoutDashboard className="h-4 w-4" />
+                  Tableau de bord
+                </Link>
+              </Button>
+              <Button variant="ghost" size="sm" asChild>
+                <Link href="/analytics" className="flex items-center gap-2">
+                  <BarChart3 className="h-4 w-4" />
+                  Analytics
+                </Link>
+              </Button>
+            </nav>
           </div>
 
-          {/* Navigation and User Menu */}
+          {/* User Menu */}
           <div className="flex items-center space-x-4">
-            {/* Analytics Link */}
-            <Button variant="ghost" size="sm" asChild>
-              <a href="/analytics">Analytics</a>
-            </Button>
-
-            {/* Notifications */}
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 h-3 w-3 bg-destructive rounded-full text-xs text-white flex items-center justify-center">
-                3
-              </span>
-            </Button>
-
-            {/* Settings */}
             <Button variant="ghost" size="icon">
               <Settings className="h-5 w-5" />
             </Button>
 
-            {/* User Menu */}
+            <Button variant="ghost" size="icon" className="relative">
+              <Bell className="h-5 w-5" />
+              <span className="absolute top-1 right-1 h-2 w-2 bg-primary rounded-full" />
+            </Button>
+
             <div className="flex items-center space-x-2">
-              <div className="p-2 bg-primary/10 rounded-full">
-                <User className="h-5 w-5 text-primary" />
+              <div className="p-2 bg-secondary rounded-full">
+                <User className="h-5 w-5 text-secondary-foreground" />
               </div>
               <div className="hidden md:block">
                 <p className="text-sm font-medium">{userName}</p>
@@ -59,7 +61,7 @@ export default function DashboardHeader({ userName = "Utilisateur", onLogout }: 
                 onClick={onLogout}
                 title="Déconnexion"
               >
-                <LogOut className="h-4 w-4" />
+                <LogOut className="h-5 w-5 text-muted-foreground" />
               </Button>
             </div>
           </div>

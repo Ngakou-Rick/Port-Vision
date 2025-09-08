@@ -46,11 +46,11 @@ const hourlyDistribution = [
 ];
 
 const objectTypes = [
-  { name: "Conteneurs", value: 45, color: "#3b82f6" },
-  { name: "Grues", value: 20, color: "#10b981" },
-  { name: "Chariots", value: 15, color: "#f59e0b" },
-  { name: "Véhicules", value: 12, color: "#ef4444" },
-  { name: "Autres", value: 8, color: "#8b5cf6" },
+  { name: "Conteneurs", value: 45, color: "hsl(var(--chart-1))" },
+  { name: "Grues", value: 20, color: "hsl(var(--chart-2))" },
+  { name: "Chariots", value: 15, color: "hsl(var(--chart-3))" },
+  { name: "Véhicules", value: 12, color: "hsl(var(--chart-4))" },
+  { name: "Autres", value: 8, color: "hsl(var(--chart-5))" },
 ];
 
 const performanceMetrics = [
@@ -88,21 +88,21 @@ export default function AnalyticsCharts() {
               <Line 
                 type="monotone" 
                 dataKey="analyses" 
-                stroke="#3b82f6" 
+                stroke="hsl(var(--chart-1))"
                 strokeWidth={2}
                 name="Total analyses"
               />
               <Line 
                 type="monotone" 
                 dataKey="containers" 
-                stroke="#10b981" 
+                stroke="hsl(var(--chart-2))"
                 strokeWidth={2}
                 name="Conteneurs scannés"
               />
               <Line 
                 type="monotone" 
                 dataKey="success" 
-                stroke="#f59e0b" 
+                stroke="hsl(var(--chart-3))"
                 strokeWidth={2}
                 name="Analyses réussies"
               />
@@ -126,7 +126,7 @@ export default function AnalyticsCharts() {
               <XAxis dataKey="hour" />
               <YAxis />
               <Tooltip formatter={(value) => [value, 'Analyses']} />
-              <Bar dataKey="analyses" fill="#3b82f6" />
+              <Bar dataKey="analyses" fill="hsl(var(--chart-1))" />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>
@@ -185,7 +185,7 @@ export default function AnalyticsCharts() {
                   <div className="w-full bg-secondary rounded-full h-2">
                     <div
                       className={`h-2 rounded-full transition-all duration-300 ${
-                        metric.value >= metric.target ? 'bg-green-500' : 'bg-yellow-500'
+                        metric.value >= metric.target ? 'bg-primary' : 'bg-yellow-500'
                       }`}
                       style={{
                         width: `${Math.min((metric.value / metric.target) * 100, 100)}%`
@@ -229,8 +229,8 @@ export default function AnalyticsCharts() {
               <Area
                 type="monotone"
                 dataKey={(entry) => (entry.success / entry.analyses) * 100}
-                stroke="#10b981"
-                fill="#10b981"
+                stroke="hsl(var(--chart-2))"
+                fill="hsl(var(--chart-2))"
                 fillOpacity={0.3}
               />
             </AreaChart>

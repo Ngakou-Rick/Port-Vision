@@ -17,6 +17,22 @@ import {
   CheckCircle
 } from "lucide-react";
 
+const StatCard = ({ title, value, icon: Icon, colorClass = "text-primary" }) => (
+  <Card>
+    <CardContent className="p-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm font-medium text-muted-foreground">{title}</p>
+          <p className="text-2xl font-bold">{value}</p>
+        </div>
+        <div className={`p-3 bg-primary/10 rounded-full`}>
+          <Icon className={`h-6 w-6 ${colorClass}`} />
+        </div>
+      </div>
+    </CardContent>
+  </Card>
+);
+
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState("upload");
   const [analysisHistory, setAnalysisHistory] = useState<any[]>([]);
@@ -39,72 +55,21 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen bg-background">
       <DashboardHeader userName="Jean Dupont" onLogout={handleLogout} />
       
       <main className="container mx-auto px-4 py-8">
         {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">Analyses aujourd'hui</p>
-                  <p className="text-2xl font-bold">24</p>
-                </div>
-                <div className="p-2 bg-primary/10 rounded-full">
-                  <Activity className="h-5 w-5 text-primary" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">Conteneurs scannés</p>
-                  <p className="text-2xl font-bold">156</p>
-                </div>
-                <div className="p-2 bg-green-100 rounded-full">
-                  <CheckCircle className="h-5 w-5 text-green-600" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">Taux de réussite</p>
-                  <p className="text-2xl font-bold">94.2%</p>
-                </div>
-                <div className="p-2 bg-blue-100 rounded-full">
-                  <TrendingUp className="h-5 w-5 text-blue-600" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">Temps moyen</p>
-                  <p className="text-2xl font-bold">2.3s</p>
-                </div>
-                <div className="p-2 bg-orange-100 rounded-full">
-                  <Clock className="h-5 w-5 text-orange-600" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <StatCard title="Analyses aujourd'hui" value="24" icon={Activity} />
+          <StatCard title="Conteneurs scannés" value="156" icon={CheckCircle} colorClass="text-green-500" />
+          <StatCard title="Taux de réussite" value="94.2%" icon={TrendingUp} colorClass="text-blue-500" />
+          <StatCard title="Temps moyen" value="2.3s" icon={Clock} colorClass="text-orange-500" />
         </div>
 
         {/* Main Content Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3">
             <TabsTrigger value="upload" className="flex items-center gap-2">
               <Camera className="h-4 w-4" />
               Upload d'Image
@@ -141,32 +106,32 @@ export default function DashboardPage() {
                   Historique des Analyses
                 </CardTitle>
                 <CardDescription>
-                  Dernières analyses effectuées
+                  Les 10 dernières analyses effectuées sur la plateforme.
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 {analysisHistory.length === 0 ? (
-                  <div className="text-center py-12">
+                  <div className="text-center py-16 border-2 border-dashed rounded-lg">
                     <History className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <p className="text-muted-foreground">Aucune analyse récente</p>
+                    <h3 className="text-lg font-semibold">Aucune analyse récente</h3>
                     <p className="text-sm text-muted-foreground mt-1">
-                      Effectuez votre première analyse pour voir l'historique
+                      Effectuez votre première analyse pour consulter l'historique ici.
                     </p>
                   </div>
                 ) : (
                   <div className="space-y-4">
                     {analysisHistory.map((analysis, index) => (
-                      <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
+                      <div key={index} className="flex items-center justify-between p-4 border rounded-lg hover:bg-secondary/50 transition-colors">
                         <div className="flex items-center gap-4">
-                          <div className="p-2 bg-primary/10 rounded-full">
+                          <div className="p-3 bg-secondary rounded-full">
                             {analysis.imageUrl ? (
-                              <Camera className="h-5 w-5 text-primary" />
+                              <Camera className="h-5 w-5 text-secondary-foreground" />
                             ) : (
-                              <Container className="h-5 w-5 text-primary" />
+                              <Container className="h-5 w-5 text-secondary-foreground" />
                             )}
                           </div>
                           <div>
-                            <p className="font-medium">
+                            <p className="font-semibold">
                               {analysis.containerNumber || "Analyse d'image"}
                             </p>
                             <p className="text-sm text-muted-foreground">
@@ -174,11 +139,11 @@ export default function DashboardPage() {
                             </p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm text-muted-foreground">
+                        <div className="flex items-center gap-2 text-sm">
+                          <span className="text-muted-foreground">
                             {analysis.objects?.length || analysis.contents?.length || 0} objets
                           </span>
-                          <div className="w-2 h-2 bg-green-500 rounded-full" />
+                          <div className="w-2 h-2 bg-green-500 rounded-full" title="Analyse réussie" />
                         </div>
                       </div>
                     ))}

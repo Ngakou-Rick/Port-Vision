@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Eye, EyeOff, Ship, AlertCircle, CheckCircle } from "lucide-react";
+import { Eye, EyeOff, AlertCircle, ArrowRight } from "lucide-react";
 
 export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -132,257 +132,230 @@ export default function RegisterForm() {
   const passwordStrength = getPasswordStrength(formData.password);
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
-      <CardHeader className="text-center">
-        <div className="flex justify-center mb-4">
-          <div className="p-3 bg-primary/10 rounded-full">
-            <Ship className="h-8 w-8 text-primary" />
-          </div>
-        </div>
-        <CardTitle className="text-2xl font-bold">Créer un compte</CardTitle>
-        <CardDescription>
-          Rejoignez notre plateforme de reconnaissance d'images portuaire
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
+    <Card className="w-full bg-transparent border-none shadow-none">
+      <CardContent className="p-0">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Personal Information */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-foreground">Informations personnelles</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="firstName">Prénom *</Label>
-                <Input
-                  id="firstName"
-                  name="firstName"
-                  type="text"
-                  placeholder="Jean"
-                  value={formData.firstName}
-                  onChange={handleInputChange}
-                  className={errors.firstName ? "border-destructive" : ""}
-                />
-                {errors.firstName && (
-                  <div className="flex items-center gap-1 text-sm text-destructive">
-                    <AlertCircle className="h-4 w-4" />
-                    <span>{errors.firstName}</span>
-                  </div>
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="lastName">Nom *</Label>
-                <Input
-                  id="lastName"
-                  name="lastName"
-                  type="text"
-                  placeholder="Dupont"
-                  value={formData.lastName}
-                  onChange={handleInputChange}
-                  className={errors.lastName ? "border-destructive" : ""}
-                />
-                {errors.lastName && (
-                  <div className="flex items-center gap-1 text-sm text-destructive">
-                    <AlertCircle className="h-4 w-4" />
-                    <span>{errors.lastName}</span>
-                  </div>
-                )}
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="firstName">Prénom *</Label>
+              <Input
+                id="firstName"
+                name="firstName"
+                type="text"
+                placeholder="Jean"
+                value={formData.firstName}
+                onChange={handleInputChange}
+                className={errors.firstName ? "border-destructive" : ""}
+              />
+              {errors.firstName && (
+                <div className="flex items-center gap-1 text-sm text-destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <span>{errors.firstName}</span>
+                </div>
+              )}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email professionnel *</Label>
+              <Label htmlFor="lastName">Nom *</Label>
               <Input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="jean.dupont@entreprise.com"
-                value={formData.email}
+                id="lastName"
+                name="lastName"
+                type="text"
+                placeholder="Dupont"
+                value={formData.lastName}
                 onChange={handleInputChange}
-                className={errors.email ? "border-destructive" : ""}
+                className={errors.lastName ? "border-destructive" : ""}
               />
-              {errors.email && (
+              {errors.lastName && (
                 <div className="flex items-center gap-1 text-sm text-destructive">
                   <AlertCircle className="h-4 w-4" />
-                  <span>{errors.email}</span>
+                  <span>{errors.lastName}</span>
                 </div>
               )}
             </div>
           </div>
 
-          {/* Company Information */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-foreground">Informations entreprise</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="company">Nom de l'entreprise *</Label>
-                <Input
-                  id="company"
-                  name="company"
-                  type="text"
-                  placeholder="Port de Marseille"
-                  value={formData.company}
-                  onChange={handleInputChange}
-                  className={errors.company ? "border-destructive" : ""}
-                />
-                {errors.company && (
-                  <div className="flex items-center gap-1 text-sm text-destructive">
-                    <AlertCircle className="h-4 w-4" />
-                    <span>{errors.company}</span>
-                  </div>
-                )}
+          <div className="space-y-2">
+            <Label htmlFor="email">Email professionnel *</Label>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="jean.dupont@entreprise.com"
+              value={formData.email}
+              onChange={handleInputChange}
+              className={errors.email ? "border-destructive" : ""}
+            />
+            {errors.email && (
+              <div className="flex items-center gap-1 text-sm text-destructive">
+                <AlertCircle className="h-4 w-4" />
+                <span>{errors.email}</span>
               </div>
+            )}
+          </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="position">Poste *</Label>
-                <Input
-                  id="position"
-                  name="position"
-                  type="text"
-                  placeholder="Responsable sécurité"
-                  value={formData.position}
-                  onChange={handleInputChange}
-                  className={errors.position ? "border-destructive" : ""}
-                />
-                {errors.position && (
-                  <div className="flex items-center gap-1 text-sm text-destructive">
-                    <AlertCircle className="h-4 w-4" />
-                    <span>{errors.position}</span>
-                  </div>
-                )}
-              </div>
+          {/* Company Information */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="company">Nom de l'entreprise *</Label>
+              <Input
+                id="company"
+                name="company"
+                type="text"
+                placeholder="Port de Marseille"
+                value={formData.company}
+                onChange={handleInputChange}
+                className={errors.company ? "border-destructive" : ""}
+              />
+              {errors.company && (
+                <div className="flex items-center gap-1 text-sm text-destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <span>{errors.company}</span>
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="position">Poste *</Label>
+              <Input
+                id="position"
+                name="position"
+                type="text"
+                placeholder="Responsable sécurité"
+                value={formData.position}
+                onChange={handleInputChange}
+                className={errors.position ? "border-destructive" : ""}
+              />
+              {errors.position && (
+                <div className="flex items-center gap-1 text-sm text-destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <span>{errors.position}</span>
+                </div>
+              )}
             </div>
           </div>
 
           {/* Password Section */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-foreground">Sécurité</h3>
-            <div className="space-y-2">
-              <Label htmlFor="password">Mot de passe *</Label>
-              <div className="relative">
-                <Input
-                  id="password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  className={errors.password ? "border-destructive pr-10" : "pr-10"}
-                />
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-4 w-4 text-muted-foreground" />
-                  ) : (
-                    <Eye className="h-4 w-4 text-muted-foreground" />
-                  )}
-                </Button>
-              </div>
-              
-              {/* Password Strength Indicator */}
-              {formData.password && (
-                <div className="space-y-2">
-                  <div className="flex gap-1">
-                    {[1, 2, 3, 4, 5].map((level) => (
-                      <div
-                        key={level}
-                        className={`h-2 flex-1 rounded ${
-                          level <= passwordStrength
-                            ? passwordStrength <= 2
-                              ? "bg-destructive"
-                              : passwordStrength <= 3
-                              ? "bg-yellow-500"
-                              : "bg-green-500"
-                            : "bg-muted"
-                        }`}
-                      />
-                    ))}
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    {passwordStrength <= 2 && "Faible"}
-                    {passwordStrength === 3 && "Moyen"}
-                    {passwordStrength >= 4 && "Fort"}
-                  </p>
-                </div>
-              )}
-
-              {errors.password && (
-                <div className="flex items-center gap-1 text-sm text-destructive">
-                  <AlertCircle className="h-4 w-4" />
-                  <span>{errors.password}</span>
-                </div>
-              )}
+          <div className="space-y-2">
+            <Label htmlFor="password">Mot de passe *</Label>
+            <div className="relative">
+              <Input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="••••••••"
+                value={formData.password}
+                onChange={handleInputChange}
+                className={errors.password ? "border-destructive pr-10" : "pr-10"}
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4 text-muted-foreground" />
+                ) : (
+                  <Eye className="h-4 w-4 text-muted-foreground" />
+                )}
+              </Button>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirmer le mot de passe *</Label>
-              <div className="relative">
-                <Input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type={showConfirmPassword ? "text" : "password"}
-                  placeholder="••••••••"
-                  value={formData.confirmPassword}
-                  onChange={handleInputChange}
-                  className={errors.confirmPassword ? "border-destructive pr-10" : "pr-10"}
-                />
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                >
-                  {showConfirmPassword ? (
-                    <EyeOff className="h-4 w-4 text-muted-foreground" />
-                  ) : (
-                    <Eye className="h-4 w-4 text-muted-foreground" />
-                  )}
-                </Button>
-              </div>
-              {errors.confirmPassword && (
-                <div className="flex items-center gap-1 text-sm text-destructive">
-                  <AlertCircle className="h-4 w-4" />
-                  <span>{errors.confirmPassword}</span>
+            {/* Password Strength Indicator */}
+            {formData.password && (
+              <div className="space-y-2 pt-1">
+                <div className="flex gap-1">
+                  {[1, 2, 3, 4, 5].map((level) => (
+                    <div
+                      key={level}
+                      className={`h-1.5 flex-1 rounded ${
+                        level <= passwordStrength
+                          ? passwordStrength <= 2
+                            ? "bg-destructive"
+                            : passwordStrength <= 3
+                            ? "bg-yellow-500"
+                            : "bg-green-500"
+                          : "bg-muted"
+                      }`}
+                    />
+                  ))}
                 </div>
-              )}
+              </div>
+            )}
+
+            {errors.password && (
+              <div className="flex items-center gap-1 text-sm text-destructive">
+                <AlertCircle className="h-4 w-4" />
+                <span>{errors.password}</span>
+              </div>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="confirmPassword">Confirmer le mot de passe *</Label>
+            <div className="relative">
+              <Input
+                id="confirmPassword"
+                name="confirmPassword"
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="••••••••"
+                value={formData.confirmPassword}
+                onChange={handleInputChange}
+                className={errors.confirmPassword ? "border-destructive pr-10" : "pr-10"}
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? (
+                  <EyeOff className="h-4 w-4 text-muted-foreground" />
+                ) : (
+                  <Eye className="h-4 w-4 text-muted-foreground" />
+                )}
+              </Button>
             </div>
+            {errors.confirmPassword && (
+              <div className="flex items-center gap-1 text-sm text-destructive">
+                <AlertCircle className="h-4 w-4" />
+                <span>{errors.confirmPassword}</span>
+              </div>
+            )}
           </div>
 
           {/* Terms and Conditions */}
-          <div className="space-y-4">
-            <div className="flex items-start space-x-2">
-              <input
-                id="acceptTerms"
-                name="acceptTerms"
-                type="checkbox"
-                checked={formData.acceptTerms}
-                onChange={handleInputChange}
-                className="mt-1 h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
-              />
-              <div className="text-sm">
-                <Label htmlFor="acceptTerms" className="cursor-pointer">
-                  J'accepte les{" "}
-                  <Button variant="link" className="p-0 h-auto text-sm font-medium">
-                    conditions d'utilisation
-                  </Button>{" "}
-                  et la{" "}
-                  <Button variant="link" className="p-0 h-auto text-sm font-medium">
-                    politique de confidentialité
-                  </Button>{" "}
-                  *
-                </Label>
-                {errors.acceptTerms && (
-                  <div className="flex items-center gap-1 text-sm text-destructive mt-1">
-                    <AlertCircle className="h-4 w-4" />
-                    <span>{errors.acceptTerms}</span>
-                  </div>
-                )}
-              </div>
+          <div className="flex items-start space-x-2 pt-2">
+            <input
+              id="acceptTerms"
+              name="acceptTerms"
+              type="checkbox"
+              checked={formData.acceptTerms}
+              onChange={handleInputChange}
+              className="mt-1 h-4 w-4 text-primary focus:ring-primary border-muted-foreground rounded"
+            />
+            <div className="text-sm">
+              <Label htmlFor="acceptTerms" className="cursor-pointer font-normal">
+                J'accepte les{" "}
+                <Button variant="link" className="p-0 h-auto text-sm font-medium">
+                  conditions d'utilisation
+                </Button>{" "}
+                et la{" "}
+                <Button variant="link" className="p-0 h-auto text-sm font-medium">
+                  politique de confidentialité
+                </Button>{" "}
+                *
+              </Label>
+              {errors.acceptTerms && (
+                <div className="flex items-center gap-1 text-sm text-destructive mt-1">
+                  <AlertCircle className="h-4 w-4" />
+                  <span>{errors.acceptTerms}</span>
+                </div>
+              )}
             </div>
           </div>
 
@@ -392,6 +365,7 @@ export default function RegisterForm() {
             disabled={isLoading}
           >
             {isLoading ? "Création du compte..." : "Créer mon compte"}
+            {!isLoading && <ArrowRight className="ml-2 h-4 w-4" />}
           </Button>
         </form>
 
