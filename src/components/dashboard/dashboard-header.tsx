@@ -1,8 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Ship, Bell, User, LogOut, Settings, BarChart3, LayoutDashboard } from "lucide-react";
+import { Bell, User, LogOut, Settings, BarChart3, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface DashboardHeaderProps {
   userName?: string;
@@ -17,8 +18,7 @@ export default function DashboardHeader({ userName = "Utilisateur", onLogout }: 
           {/* Logo and Title */}
           <div className="flex items-center space-x-4">
             <Link href="/" className="flex items-center space-x-2">
-              <Ship className="h-7 w-7 text-primary" />
-              <span className="text-xl font-bold text-foreground">PortScan</span>
+              <Image src="/logo_douanes.png" alt="Port Vision" width={32} height={32} />
             </Link>
             <nav className="hidden md:flex items-center space-x-2">
               <Button variant="secondary" size="sm" asChild>

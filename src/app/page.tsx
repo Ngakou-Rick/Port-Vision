@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Ship, Camera, BarChart3, Shield, ArrowRight } from "lucide-react";
+import { Camera, BarChart3, Shield, ArrowRight } from "lucide-react";
 import Image from "next/image";
 
 export default function Home() {
@@ -11,8 +11,7 @@ export default function Home() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <Ship className="h-8 w-8 text-primary" />
-              <h1 className="text-2xl font-bold text-foreground">PortScan</h1>
+              <Image src="/logo_douanes.png" alt="Port Vision" width={40} height={40} />
             </div>
             <div className="flex items-center space-x-2">
               <Button variant="ghost" asChild>
@@ -110,7 +109,7 @@ export default function Home() {
               <Card className="text-center hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
                 <CardHeader>
                   <div className="mx-auto bg-primary/10 rounded-full p-3 w-fit mb-4">
-                    <Ship className="h-10 w-10 text-primary" />
+                    <Image src="/logo_douanes.png" alt="Port Vision" width={40} height={40} />
                   </div>
                   <CardTitle className="text-xl">Spécialisé Portuaire</CardTitle>
                 </CardHeader>

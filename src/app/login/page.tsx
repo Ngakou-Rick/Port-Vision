@@ -10,8 +10,7 @@ export default function LoginPage() {
         <div className="w-full max-w-md">
           <div className="mb-8 text-center lg:text-left">
             <Link href="/" className="inline-flex items-center gap-2 mb-8">
-              <Ship className="h-8 w-8 text-primary" />
-              <span className="text-2xl font-bold">PortScan</span>
+              <Image src="/logo_douanes.png" alt="Port Vision" width={40} height={40} />
             </Link>
             <h1 className="text-3xl font-bold text-foreground">
               Bienvenue à nouveau
